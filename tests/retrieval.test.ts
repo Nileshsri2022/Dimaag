@@ -112,12 +112,13 @@ describe("assembleSubgraph", () => {
     });
 
     expect(sg.chunks.map((c) => c.id)).toEqual([a2, a1, a0]); // rank order, capped
-    // Kestrel Labs + Ada matched by name tokens in the selected chunks, in
-    // store order (first-seen); Grafana's token is absent.
+    // Kestrel Labs + Ada matched by name tokens in the selected chunks;
+    // Grafana's token is absent. IndexedDB getAll returns primary-key (UUID)
+    // order, which is not insertion order, so only the membership is pinned.
     const entities = await store.listEntities();
     const kestrel = entities.find((e) => e.name === "Kestrel Labs")!;
     const ada = entities.find((e) => e.name === "Ada")!;
-    expect(sg.entities.map((e) => e.id)).toEqual([kestrel.id, ada.id]);
+    expect(new Set(sg.entities.map((e) => e.id))).toEqual(new Set([kestrel.id, ada.id]));
     expect(sg.edges).toHaveLength(1);
     expect(sg.edges[0].from).toBe(kestrel.id);
     expect(sg.edges[0].to).toBe(ada.id);
