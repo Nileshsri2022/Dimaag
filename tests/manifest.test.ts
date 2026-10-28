@@ -13,4 +13,8 @@ it("has the exact v1 permission posture", () => {
   expect(manifest.host_permissions).toBeUndefined();
   expect(manifest.content_scripts).toBeUndefined();
   expect(manifest.manifest_version).toBe(3);
+  expect(manifest.options_ui).toEqual({
+    page: "src/options/index.html",
+    open_in_tab: true,
+  });
 });
