@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Settings } from "lucide-react";
 import CaptureView from "./CaptureView";
 import ChatView from "./ChatView";
+import BrowseView from "./BrowseView";
 
 /**
  * Side panel (Task 14 scope): the approved Capture design's quiet header
@@ -40,8 +41,13 @@ export default function App() {
                 {tab === "chat" && <div className="absolute -bottom-2.5 left-0 right-0 h-[2px] rounded-full bg-primary" />}
               </button>
               <span className="mx-1.5 select-none text-[11px] text-[#a8a29e]">·</span>
-              <button type="button" disabled className="py-1 text-[#a8a29e] cursor-not-allowed">
+              <button
+                type="button"
+                onClick={() => setTab("browse")}
+                className={`relative py-1 ${tab === "browse" ? "font-semibold text-primary" : "text-[#645d58]"}`}
+              >
                 Browse
+                {tab === "browse" && <div className="absolute -bottom-2.5 left-0 right-0 h-[2px] rounded-full bg-primary" />}
               </button>
             </nav>
           </div>
@@ -60,6 +66,7 @@ export default function App() {
       <div className="flex-1 overflow-y-auto">
         {tab === "capture" && <CaptureView />}
         {tab === "chat" && <ChatView />}
+        {tab === "browse" && <BrowseView />}
       </div>
 
       {/* Quiet footnote */}

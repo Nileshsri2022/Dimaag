@@ -52,7 +52,9 @@ export interface AskPayload {
 export type Req =
   | { type: "INGEST"; payload: IngestPayload }
   | { type: "ASK"; payload: AskPayload }
-  | { type: "STATS" };
+  | { type: "STATS" }
+  | { type: "LIST_ENTITIES" }
+  | { type: "ENTITY_DETAIL"; payload: { id: string } };
 
 export type IngestResult =
   | { ok: false; needsSensitiveConfirm: true }
@@ -76,6 +78,10 @@ export type StatsResult = {
   ok: true;
   stats: { documents: number; chunks: number; entities: number; edges: number };
 };
+
+export type ListEntitiesResult = { ok: true; entities: import("../lib/types").Entity[] };
+export type EntityDetailResult =
+  | { ok: true; detail: { entity: import("../lib/types").Entity; chunks: import("../lib/types").Chunk[] } | null };
 
 async function ingest(payload: IngestPayload, deps: RouterDeps): Promise<IngestResult> {
   // Guardrail first: the UI shows the warning and resends with confirmation.
@@ -158,7 +164,7 @@ async function ask(payload: AskPayload, deps: RouterDeps): Promise<AskResult> {
 export async function handleRequest(
   req: Req,
   deps: RouterDeps,
-): Promise<IngestResult | AskResult | StatsResult> {
+): Promise<IngestResult | AskResult | StatsResult | ListEntitiesResult | EntityDetailResult | { ok: false; error: string }> {
   try {
     switch (req.type) {
       case "INGEST":
@@ -167,6 +173,10 @@ export async function handleRequest(
         return await ask(req.payload, deps);
       case "STATS":
         return { ok: true, stats: await (await deps.store()).stats() };
+      case "LIST_ENTITIES":
+        return { ok: true, entities: await (await deps.store()).listEntities() };
+      case "ENTITY_DETAIL":
+        return { ok: true, detail: await (await deps.store()).getEntityDetail(req.payload.id) };
     }
   } catch (err) {
     return { ok: false, error: errorMessage(err) };
