@@ -8,8 +8,9 @@ import {
   type GraphExport,
   type GraphStore,
   type IngestInput,
-  type Subgraph,
 } from "./types";
+import { bm25Scores } from "./bm25";
+import { assembleSubgraph, tokenize } from "./retrieval";
 
 const DB_NAME = "dimaag";
 const DB_VERSION = 1;
@@ -222,9 +223,44 @@ export async function createLocalStore(): Promise<GraphStore> {
       };
     },
 
-    async search(): Promise<Subgraph> {
-      // BM25 retrieval arrives in Task 9; stub keeps the interface surface usable.
-      return { chunks: [], entities: [], edges: [] };
+    async search(query, opts) {
+      // Empty query → empty Subgraph, no wasted calls.
+      const queryTokens = tokenize(query);
+      if (queryTokens.length === 0) {
+        return { chunks: [], entities: [], edges: [] };
+      }
+
+      // The store holds only active and superseded records; superseded
+      // chunks are excluded from ranking.
+      const [allChunks, allEntities] = await Promise.all([
+        db.getAll("chunks"),
+        db.getAll("entities"),
+      ]);
+      const active = allChunks.filter((c) => !c.superseded);
+      const activeById = new Map(active.map((c) => [c.id, c]));
+
+      const scores = bm25Scores(query, active.map((c) => ({ id: c.id, text: c.text })));
+
+      // Entity-name matches append the entity's active evidence chunks with
+      // a rank boost: a flat bonus on top of each chunk's BM25 score.
+      const queryTokenSet = new Set(queryTokens);
+      const ENTITY_NAME_BONUS = 1;
+      for (const entity of allEntities) {
+        if (!tokenize(entity.name).some((t) => queryTokenSet.has(t))) continue;
+        for (const chunkId of entity.evidenceChunkIds) {
+          if (!activeById.has(chunkId)) continue;
+          scores.set(chunkId, (scores.get(chunkId) ?? 0) + ENTITY_NAME_BONUS);
+        }
+      }
+
+      // Rank order: score desc, ties keep store (insertion) order. Chunks
+      // with no term and no entity boost (score 0) never surface.
+      const ranked = [...scores.entries()]
+        .filter(([, score]) => score > 0)
+        .sort((a, b) => b[1] - a[1])
+        .map(([id]) => id);
+
+      return assembleSubgraph(store, ranked, opts);
     },
 
     async exportAll(): Promise<GraphExport> {
