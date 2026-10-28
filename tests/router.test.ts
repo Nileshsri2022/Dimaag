@@ -353,3 +353,34 @@ describe("router: STATS", () => {
     expect(res).toEqual({ ok: true, stats: { documents: 1, chunks: 2, entities: 3, edges: 4 } });
   });
 });
+
+describe("router: LIST_ENTITIES", () => {
+  it("returns the store's entity array", async () => {
+    const fake = [{ id: "e1", name: "Ada", label: "Person", properties: {} }];
+    const deps = makeDeps({});
+    (deps.store as unknown as () => Promise<unknown>)();
+    // stub listEntities
+    const store = await deps.store();
+    store.listEntities = async () => fake as never;
+    const res = await handleRequest({ type: "LIST_ENTITIES" }, deps);
+    expect(res).toEqual({ ok: true, entities: fake });
+  });
+});
+
+describe("router: ENTITY_DETAIL", () => {
+  it("returns detail for known id", async () => {
+    const detail = { entity: { id: "e1", name: "Ada", label: "Person", properties: {} }, chunks: [{ id: "c1", text: "hi", superseded: false }] };
+    const deps = makeDeps({});
+    const store = await deps.store();
+    store.getEntityDetail = async () => detail as never;
+    const res = await handleRequest({ type: "ENTITY_DETAIL", payload: { id: "e1" } }, deps);
+    expect(res).toEqual({ ok: true, detail });
+  });
+  it("returns null for unknown id", async () => {
+    const deps = makeDeps({});
+    const store = await deps.store();
+    store.getEntityDetail = async () => null;
+    const res = await handleRequest({ type: "ENTITY_DETAIL", payload: { id: "nope" } }, deps);
+    expect(res).toEqual({ ok: true, detail: null });
+  });
+});
