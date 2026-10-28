@@ -27,13 +27,23 @@ const captureDeps: CaptureDeps = {
 
 // sendResponse is used asynchronously, so the listener must return true to
 // keep the message channel open.
-chrome.runtime.onMessage.addListener((req: Req | { type: "CAPTURE"; payload: CaptureRequest }, _sender, sendResponse) => {
-    const pending =
-      req.type === "CAPTURE"
-        ? handleCapture(req, captureDeps)
+chrome.runtime.onMessage.addListener((req: Req | { type: "CAPTURE"; payload: CaptureRequest } | { type: "GET_ACTIVE_TAB" }, _sender, sendResponse) => {
+  const pending =
+    req.type === "CAPTURE"
+      ? handleCapture(req, captureDeps)
+      : req.type === "GET_ACTIVE_TAB"
+        ? (async () => {
+            try {
+              const [tab] = await captureDeps.queryTabs({ active: true, currentWindow: true });
+              if (!tab || !tab.url) return { ok: false, error: "No active tab." };
+              return { ok: true, tab: { url: tab.url, title: tab.title?.trim() || tab.url } };
+            } catch (err) {
+              return { ok: false, error: errorMessage(err) };
+            }
+          })()
         : handleRequest(req, deps);
-    pending
-      .then(sendResponse)
-      .catch((err) => sendResponse({ ok: false, error: errorMessage(err) }));
-    return true;
+  pending
+    .then(sendResponse)
+    .catch((err) => sendResponse({ ok: false, error: errorMessage(err) }));
+  return true;
 });

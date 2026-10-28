@@ -55,11 +55,11 @@ export default function CaptureView() {
 
   useEffect(() => {
     mounted.current = true;
-    void chrome.tabs
-      .query({ active: true, currentWindow: true })
-      .then(([active]) => {
-        if (mounted.current && active?.url) {
-          setTab({ url: active.url, title: active.title?.trim() || active.url });
+    void chrome.runtime
+      .sendMessage({ type: "GET_ACTIVE_TAB" })
+      .then((res: { ok?: boolean; tab?: { url: string; title: string } } | undefined) => {
+        if (mounted.current && res?.ok && res.tab?.url) {
+          setTab({ url: res.tab.url, title: res.tab.title?.trim() || res.tab.url });
         }
       })
       .catch(() => {
