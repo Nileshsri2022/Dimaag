@@ -31,7 +31,10 @@ export async function handleCapture(
   deps: CaptureDeps,
 ): Promise<CaptureResult> {
   try {
-    const [tab] = await deps.queryTabs({ active: true, currentWindow: true });
+    let [tab] = await deps.queryTabs({ active: true, lastFocusedWindow: true });
+    if (!tab || tab.id === undefined || !tab.url) {
+      [tab] = await deps.queryTabs({ active: true, currentWindow: true });
+    }
     if (!tab || tab.id === undefined || !tab.url) {
       return { ok: false, error: "No active tab to capture." };
     }

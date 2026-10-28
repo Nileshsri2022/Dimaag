@@ -10,8 +10,8 @@ const manifest: Manifest = {
   manifest_version: 3,
   name: "Dimaag",
   version: "1.0.0",
-  permissions: ["sidePanel", "storage", "unlimitedStorage", "activeTab", "scripting"],
-  optional_host_permissions: ["https://*/*", "http://*/*"],
+  permissions: ["sidePanel", "storage", "unlimitedStorage", "activeTab", "scripting", "tabs"],
+  host_permissions: ["https://*/*", "http://*/*"],
   background: {
     service_worker: "src/background/serviceWorker.ts",
     type: "module",

@@ -34,7 +34,10 @@ chrome.runtime.onMessage.addListener((req: Req | { type: "CAPTURE"; payload: Cap
       : req.type === "GET_ACTIVE_TAB"
         ? (async () => {
             try {
-              const [tab] = await captureDeps.queryTabs({ active: true, currentWindow: true });
+              let [tab] = await captureDeps.queryTabs({ active: true, lastFocusedWindow: true });
+              if (!tab || !tab.url) {
+                [tab] = await captureDeps.queryTabs({ active: true, currentWindow: true });
+              }
               if (!tab || !tab.url) return { ok: false, error: "No active tab." };
               return { ok: true, tab: { url: tab.url, title: tab.title?.trim() || tab.url } };
             } catch (err) {

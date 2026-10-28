@@ -55,18 +55,43 @@ export default function CaptureView() {
 
   useEffect(() => {
     mounted.current = true;
-    void chrome.runtime
-      .sendMessage({ type: "GET_ACTIVE_TAB" })
-      .then((res: { ok?: boolean; tab?: { url: string; title: string } } | undefined) => {
-        if (mounted.current && res?.ok && res.tab?.url) {
-          setTab({ url: res.tab.url, title: res.tab.title?.trim() || res.tab.url });
-        }
-      })
-      .catch(() => {
-        /* no active tab: the cards below show the "no page" state */
-      });
+    function refreshTab() {
+      void chrome.runtime
+        .sendMessage({ type: "GET_ACTIVE_TAB" })
+        .then((res: { ok?: boolean; tab?: { url: string; title: string } } | undefined) => {
+          if (mounted.current && res?.ok && res.tab?.url) {
+            setTab({ url: res.tab.url, title: res.tab.title?.trim() || res.tab.url });
+          } else if (mounted.current && res && !res.ok) {
+            setTab(null);
+          }
+        })
+        .catch(() => {
+          /* no active tab: the cards below show the "no page" state */
+        });
+    }
+
+    refreshTab();
+
+    const onActivated = () => refreshTab();
+    const onUpdated = (_tabId: number, changeInfo: { url?: string; title?: string; status?: string }) => {
+      if (changeInfo.status === "complete" || changeInfo.url || changeInfo.title) {
+        refreshTab();
+      }
+    };
+
+    if (typeof chrome !== "undefined" && chrome.tabs?.onActivated?.addListener) {
+      chrome.tabs.onActivated.addListener(onActivated);
+      chrome.tabs.onUpdated?.addListener(onUpdated);
+    }
+    window.addEventListener("focus", refreshTab);
+
     return () => {
       mounted.current = false;
+      if (typeof chrome !== "undefined" && chrome.tabs?.onActivated?.removeListener) {
+        chrome.tabs.onActivated.removeListener(onActivated);
+        chrome.tabs.onUpdated?.removeListener(onUpdated);
+      }
+      window.removeEventListener("focus", refreshTab);
     };
   }, []);
 

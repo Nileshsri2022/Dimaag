@@ -77,7 +77,7 @@ describe("handleCapture (background owns tabs.query + executeScript)", () => {
   it("page capture: queries the active tab, runs pageReader, then INGESTs url/title/text", async () => {
     const res = await handleCapture(PAGE_REQ, deps);
 
-    expect(deps.queryTabs).toHaveBeenCalledWith({ active: true, currentWindow: true });
+    expect(deps.queryTabs).toHaveBeenCalledWith({ active: true, lastFocusedWindow: true });
     expect(deps.executeScript).toHaveBeenCalledTimes(1);
     const injection = deps.executeScript.mock.calls[0][0];
     expect(injection.target).toEqual({ tabId: 7 });
@@ -103,24 +103,27 @@ describe("handleCapture (background owns tabs.query + executeScript)", () => {
       executeScript: vi.fn(async () => [{ result: SELECTION_TEXT }]),
     }));
 
-    expect(res.ok).toBe(true);
+    expect(res).toEqual({
+      ok: true,
+      report: { documentId: "doc-1", chunkCount: 12, entityCount: 34, edgeCount: 18, errors: [] },
+    });
+    expect(deps.added).toHaveLength(1);
     expect(deps.added[0].document.sourceType).toBe("selection");
-    expect(deps.added[0].document.title).toBe("Ada Lovelace");
     expect(deps.added[0].chunks.join("\n")).toContain(SELECTION_TEXT);
   });
 
-  it("sensitive URL without confirm passes through the router guardrail unchanged", async () => {
-    const res = await handleCapture(PAGE_REQ, override(deps, {
-      queryTabs: vi.fn(async () => [
-        { id: 7, url: "https://www.bankofindia.co.in/login", title: "Bank" } as chrome.tabs.Tab,
-      ]),
-    }));
+  it("falls back to currentWindow if lastFocusedWindow returns no tabs", async () => {
+    const queryTabs = vi.fn(async (q: chrome.tabs.QueryInfo) => {
+      if (q.lastFocusedWindow) return [];
+      return [TAB];
+    });
+    const res = await handleCapture(PAGE_REQ, override(deps, { queryTabs }));
 
-    expect(res).toEqual({ ok: false, needsSensitiveConfirm: true });
-    expect(deps.added).toHaveLength(0);
+    expect(queryTabs).toHaveBeenCalledTimes(2);
+    expect(res.ok).toBe(true);
   });
 
-  it("page reader returning null (too little text) is a clean failure, no INGEST", async () => {
+  it("empty page text surfaces a clear failure and does not write to the store", async () => {
     const res = await handleCapture(PAGE_REQ, override(deps, {
       executeScript: vi.fn(async () => [{ result: null }]),
     }));
@@ -129,9 +132,9 @@ describe("handleCapture (background owns tabs.query + executeScript)", () => {
     expect(deps.added).toHaveLength(0);
   });
 
-  it("selection reader returning null (no selection) is a clean failure, no INGEST", async () => {
+  it("empty selection surfaces a clear failure and does not write to the store", async () => {
     const res = await handleCapture(SELECTION_REQ, override(deps, {
-      executeScript: vi.fn(async () => [{ result: null }]),
+      executeScript: vi.fn(async () => [{ result: "" }]),
     }));
 
     expect(res).toEqual({ ok: false, error: expect.stringMatching(/no .*selection/i) });

@@ -8,9 +8,9 @@ it("has the exact v1 permission posture", () => {
     "unlimitedStorage",
     "activeTab",
     "scripting",
+    "tabs",
   ]);
-  expect(manifest.optional_host_permissions).toEqual(["https://*/*", "http://*/*"]);
-  expect(manifest.host_permissions).toBeUndefined();
+  expect(manifest.host_permissions).toEqual(["https://*/*", "http://*/*"]);
   expect(manifest.content_scripts).toBeUndefined();
   expect(manifest.manifest_version).toBe(3);
   expect(manifest.options_ui).toEqual({

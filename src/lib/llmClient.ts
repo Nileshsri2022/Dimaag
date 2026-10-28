@@ -33,7 +33,16 @@ function isLlmSettings(value: unknown): value is LlmSettings {
 }
 
 function authHeaders(s: LlmSettings): Record<string, string> {
-  return { Authorization: `Bearer ${s.apiKey}` };
+  const isJwt = s.apiKey.startsWith("ey");
+  const authVal = isJwt
+    ? s.apiKey
+    : s.apiKey.startsWith("Bearer ")
+      ? s.apiKey
+      : `Bearer ${s.apiKey}`;
+  return {
+    Authorization: authVal,
+    "x-api-key": s.apiKey,
+  };
 }
 
 // Errors must carry the status and enough of the body to be visible in UI later.
