@@ -7,7 +7,7 @@ export interface IngestInput { document: Omit<Document, "id">; chunks: string[];
 export interface GraphExport { version: 1; documents: Document[]; chunks: Chunk[]; entities: Entity[]; edges: Edge[]; }
 export interface Subgraph { chunks: Chunk[]; entities: Entity[]; edges: Edge[]; }
 export interface GraphStore {
-  addDocument(input: IngestInput): Promise<{ documentId: string; chunkCount: number; entityCount: number; edgeCount: number }>;
+  addDocument(input: IngestInput): Promise<{ documentId: string; chunkCount: number; entityCount: number; edgeCount: number; errors?: string[] }>;
   listEntities(): Promise<Entity[]>;
   getEntityDetail(id: string): Promise<{ entity: Entity; chunks: Chunk[] } | null>; // chunks incl. superseded (labeled)
   getNeighbors(entityId: string): Promise<{ entities: Entity[]; edges: Edge[] }>;
