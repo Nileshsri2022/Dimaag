@@ -308,18 +308,29 @@ export function buildScriptStr(fn: typeof pageReader | typeof selectionReader): 
 - [ ] **Step 1: Failing tests (jsdom fixtures):** (a) DOM with `<main>` returns main's trimmed text; (b) DOM with only `<body>` falls back to body text, whitespace-collapsed; (c) 50-char body → null; (d) selectionReader returns selected text; no selection → null.
 - [ ] **Step 2: Run — FAIL.** **Step 3: Implement.** **Step 4: Run — PASS.** **Step 5: Commit** `feat: page and selection readers with fallbacks`
 
+### Task 12A: Stitch design batch — all four UI screens upfront (owner-chosen)
+
+**Files:**
+- Create: `docs/superpowers/designs/stitch/` — one file per screen with the final approved design (HTML from Stitch + a short note per screen on structure/copy).
+
+**Produces:** approved designs for: Options page (Task 13), Capture view (Task 14), Chat view (Task 15), Browse view (Task 16). One consistent visual language across side panel screens. No code is written in this task; each design is shown to the owner for approval before proceeding to Task 13.
+
+- [ ] **Step 1: Generate the four screens in Stitch (side panel screens share one visual language; options page same family).**
+- [ ] **Step 2: Show all four to the owner for approval; iterate until approved.**
+- [ ] **Step 3: Save designs + notes under `docs/superpowers/designs/stitch/` and commit** `design: stitch-approved v1 UI screens`.
+
 ### Task 13: Options page — connect, model select, data management
 
 **Files:**
 - Create: `src/options/App.tsx` (replace placeholder), `src/options/Connection.tsx`, `src/options/DataManagement.tsx`, `tests/options.test.tsx`
-- Consumes: T4 export/import, T7 settings/`listModels`/`ensureHostPermission`, T10 (nothing), store from background via `chrome.runtime.sendMessage({type:"STATS"})` (router Task 11 handles `STATS` returning `stats()`).
+- Consumes: approved Options design from Task 12A; T4 export/import, T7 settings/`listModels`/`ensureHostPermission`, T10 (nothing), store from background via `chrome.runtime.sendMessage({type:"STATS"})` (router Task 11 handles `STATS` returning `stats()`).
 
 **Produces:** React screens (Stitch design pass precedes implementation; componentize the design's HTML, keep its copy):
 - Connection section: inputs for Base URL, API key (masked), "Connect" button → `ensureHostPermission` then `listModels` → model `<select>` from result → Save → `setSettings`; shows current settings on load.
 - Data section: `stats()` line; "Export JSON" → downloads `dimaag-graph-<date>.json`; "Import JSON" (file input) → `parseGraphExport`; on `ok` show confirm dialog `"This deletes X documents, Y entities. Replace?"` → `importReplace`; "Delete everything" → double confirm → `deleteAll`.
 
 - [ ] **Step 1: Failing component tests (@testing-library/react, stubbed chrome + fetch):** (a) Connect with stub returning 2 models → a `<select>` lists them, Save persists via stubbed `setSettings`; (b) import flow: file → confirm button appears → after confirm `importReplace` stub called once; (c) delete requires the double confirm; (d) Connect click first calls permission stub, and on denial shows an error.
-- [ ] **Stitch step: generate the options-page design, port structure to components.** (No test needed for styling.)
+- [ ] **Design step: port the approved Task 12A Options design into `Connection.tsx` / `DataManagement.tsx` (structure and copy per approved design).**
 - [ ] **Step 2: Run — FAIL.** **Step 3: Implement.** **Step 4: Run — PASS (`npx vitest run tests/options.test.tsx`).**
 - [ ] **Step 5: Commit** `feat: options page with connect/model select and data management`
 
@@ -332,7 +343,7 @@ export function buildScriptStr(fn: typeof pageReader | typeof selectionReader): 
 **Produces:** "Add this page" and "Add selection" buttons → readers run via background (`chrome.scripting.executeScript` stays in the worker), status list per capture: `processing → done <report: 12 chunks, 34 entities, 18 edges>` or `failed <reason>` or sensitive-confirm state (warning line + "Add anyway" button which resends with `sensitiveConfirmed: true`). Active captures list persists in-component state only.
 
 - [ ] **Step 1: Failing component tests:** (a) click "Add this page" → status appears `processing`, then `done 12 chunks, 34 entities, 18 edges` for a stubbed router response; (b) failure surfaces the error text, state is `failed`; (c) sensitive URL without confirm renders the warning and never sends `sensitiveConfirmed: true`; (d) "Add anyway" resends with `sensitiveConfirmed: true`.
-- [ ] **Stitch step: design the capture + status section, port to component.**
+- [ ] **Design step: port the approved Task 12A Capture design into `CaptureView.tsx`.**
 - [ ] **Step 2: Run — FAIL.** **Step 3: Implement.** **Step 4: Run — PASS.** **Step 5: Commit** `feat: capture flow with per-document report`
 
 ### Task 15: Side panel — chat with streaming answers and sources
@@ -344,7 +355,7 @@ export function buildScriptStr(fn: typeof pageReader | typeof selectionReader): 
 **Produces:** message list (user/assistant bubbles), per assistant message a "Sources" disclosure listing `citations` chunks (text, document title, superseded badge), input box, conversation `history` kept in component state and sent with each question.
 
 - [ ] **Step 1: Failing component tests (stubbed runtime.sendMessage returning canned AskResult):** (a) asking renders the user bubble and the assistant answer; (b) citations render as an expandable list showing chunk text; (c) second ask sends the accumulated history.
-- [ ] **Stitch step: design the chat view, port to component.**
+- [ ] **Design step: port the approved Task 12A Chat design into `ChatView.tsx`.**
 - [ ] **Step 2: Run — FAIL.** **Step 3: Implement.** **Step 4: Run — PASS.** **Step 5: Commit** `feat: side panel chat with source citations`
 
 ### Task 16: Side panel — browse (entity list + detail with evidence)
@@ -356,7 +367,7 @@ export function buildScriptStr(fn: typeof pageReader | typeof selectionReader): 
 **Produces:** searchable entity list (filter by label dropdown: All/Person/Tool/Concept/other labels present); detail shows entity properties, evidence chunk texts (superseded ones badged "older capture"), and its edges as `type → other entity` rows; rows navigate to the other entity's detail.
 
 - [ ] **Step 1: Failing component tests:** (a) list renders labels and names from stub; (b) label filter narrows; (c) detail renders chunk texts and the "older capture" badge for `superseded` chunks; (d) edge row click loads the other entity.
-- [ ] **Stitch step: design list + detail, port to component.**
+- [ ] **Design step: port the approved Task 12A Browse design into `BrowseView.tsx`.**
 - [ ] **Step 2: Run — FAIL.** **Step 3: Implement (including the two router additions and their unit tests in `tests/router.test.ts`).** **Step 4: Run — PASS.** **Step 5: Commit** `feat: browse entities with evidence detail`
 
 ### Task 17: End-to-end verification (manual, from the spec's success line)
@@ -376,5 +387,6 @@ export function buildScriptStr(fn: typeof pageReader | typeof selectionReader): 
 ## Task dependency notes
 
 - Tasks 2–10 are pure library modules with independent tests; they may be built in order but only 2 blocks 3/7-consumers.
+- Task 12A is the owner-chosen upfront Stitch design batch (all four screens at once); Tasks 13–16 port the approved designs and must not redesign.
 - UI tasks (13–16) integrate across all libraries — start them only after Tasks 1–12 pass.
 - Task 17 gates "done": it is the spec's §1 success criterion.
