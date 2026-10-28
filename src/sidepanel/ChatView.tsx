@@ -102,7 +102,7 @@ export default function ChatView() {
                             <li key={i} className="flex items-start gap-1.5 text-xs text-[#645d58]">
                               <BookOpen className="mt-0.5 size-3.5 shrink-0" />
                               <span>
-                                [C{Number(i) + 1}] {c.text.length > 120 ? c.text.slice(0, 120) + "…" : c.text}
+                                [C{Number(i) + 1}] {c.text}
                               </span>
                             </li>
                           ))}
