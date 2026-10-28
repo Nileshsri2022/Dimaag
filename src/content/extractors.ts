@@ -5,6 +5,22 @@
 // only — never inspect page content for decisions; that is guardrail's job,
 // upstream, URL-only.
 export function pageReader(): { title: string; text: string } | null {
+  // Remove non-content elements from a node (Defuddle-style clutter removal).
+  function cleanNode(node: Element): Element {
+    const clone = node.cloneNode(true) as Element;
+    const junk = clone.querySelectorAll(
+      "nav, header, footer, aside, script, style, noscript, " +
+      "[role='navigation'], [role='banner'], [role='complementary'], " +
+      "[role='search'], [aria-hidden='true'], " +
+      ".sidebar, .nav, .navbar, .menu, .footer, .header, .ad, .ads, " +
+      ".advertisement, .social, .share, .comments, .related, .breadcrumb",
+    );
+    for (let i = 0; i < junk.length; i++) {
+      junk[i].remove();
+    }
+    return clone;
+  }
+
   // Collect text from shadow DOM roots recursively (SPAs, web components).
   function collectShadowText(root: ParentNode): string {
     let text = "";
@@ -33,7 +49,7 @@ export function pageReader(): { title: string; text: string } | null {
 
   // Fallback: largest text-bearing container (handles pages without semantic landmarks).
   if (node === null) {
-    const candidates = document.querySelectorAll("div, section, main, article");
+    const candidates = document.querySelectorAll("div, section");
     let best: Element | null = null;
     let bestLen = 0;
     for (let i = 0; i < candidates.length; i++) {
@@ -49,10 +65,14 @@ export function pageReader(): { title: string; text: string } | null {
     }
   }
 
-  const raw =
-    node !== null
-      ? (node.textContent || "") + collectShadowText(node)
-      : (document.body?.innerText ?? "") + collectShadowText(document);
+  let raw: string;
+  if (node !== null) {
+    const cleaned = cleanNode(node);
+    raw = (cleaned.textContent || "") + collectShadowText(node);
+  } else {
+    // Body fallback: use innerText (rendered text) as before.
+    raw = (document.body?.innerText ?? "") + collectShadowText(document);
+  }
 
   const text = raw.replace(/\s+/g, " ").trim();
   // 120 is inlined, not a module const: executeScript serializes the function
