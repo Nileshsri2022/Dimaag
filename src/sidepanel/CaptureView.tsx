@@ -8,7 +8,6 @@ import {
   Shield,
   TriangleAlert,
 } from "lucide-react";
-import { isSensitive } from "../lib/guardrail";
 import { errorMessage } from "../lib/errorMessage";
 import type { IngestResult } from "../background/router";
 import type { SourceType } from "../lib/types";
@@ -20,6 +19,7 @@ interface CaptureReport {
   chunkCount: number;
   entityCount: number;
   edgeCount: number;
+  errors?: string[];
 }
 
 /**
@@ -85,8 +85,8 @@ export default function CaptureView() {
         if (!res) {
           patchItem(id, { state: "failed", error: "The background did not respond." });
         } else if (res.ok) {
-          const { chunkCount, entityCount, edgeCount } = res.report;
-          patchItem(id, { state: "done", report: { chunkCount, entityCount, edgeCount } });
+          const { chunkCount, entityCount, edgeCount, errors } = res.report;
+          patchItem(id, { state: "done", report: { chunkCount, entityCount, edgeCount, errors } });
         } else if ("needsSensitiveConfirm" in res && res.needsSensitiveConfirm) {
           // Defense in depth: the URL-only pre-check below normally catches
           // this first; the router re-checks with the URL it actually saw.
@@ -104,10 +104,6 @@ export default function CaptureView() {
   function startCapture(sourceType: SourceType) {
     const title = tab?.title ?? "Untitled page";
     const id = nextId.current++;
-    if (tab && isSensitive(tab.url)) {
-      setItems((prev) => [{ id, sourceType, title, state: "sensitive" }, ...prev]);
-      return;
-    }
     setItems((prev) => [{ id, sourceType, title, state: "processing" }, ...prev]);
     void sendCapture(id, sourceType, false);
   }
@@ -122,7 +118,7 @@ export default function CaptureView() {
       {/* Current page card */}
       <Card className="gap-0 space-y-3 rounded-[10px] border-[#e7e2d8] p-4 shadow-[0_1px_2px_rgba(28,25,23,0.02)]">
         <div>
-          <h1 className="text-[18px] font-medium leading-[28px] leading-snug text-foreground">
+          <h1 className="text-[18px] font-medium leading-[28px] text-foreground">
             {tab ? tab.title : "No active page"}
           </h1>
           <div className="mt-1 flex items-center gap-1.5 text-[#645d58]">

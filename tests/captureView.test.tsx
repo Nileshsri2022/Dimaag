@@ -78,28 +78,32 @@ describe("CaptureView", () => {
     expect(screen.getByText("LLM not connected")).toBeTruthy();
   });
 
-  it("sensitive URL: clicking capture shows the warning and sends nothing yet", async () => {
+  it("sensitive URL: clicking capture shows the warning after router response", async () => {
     tabsQueryMock.mockResolvedValue([SENSITIVE_TAB]);
+    sendMessageMock.mockResolvedValue({ ok: false, needsSensitiveConfirm: true });
     render(<CaptureView />);
     await screen.findByText("Sign in");
 
     fireEvent.click(screen.getByRole("button", { name: "Capture page" }));
 
+    expect(sendMessageMock).toHaveBeenCalledWith({
+      type: "CAPTURE",
+      payload: { sourceType: "page", sensitiveConfirmed: false },
+    });
     expect(await screen.findByText("This page looks sensitive (banking, email, or sign-in). Capture anyway?")).toBeTruthy();
     expect(screen.getByRole("button", { name: "Add anyway" })).toBeTruthy();
-    expect(sendMessageMock).not.toHaveBeenCalled();
   });
 
   it("'Add anyway' on a sensitive page resends with sensitiveConfirmed: true", async () => {
     tabsQueryMock.mockResolvedValue([SENSITIVE_TAB]);
-    sendMessageMock.mockResolvedValue(REPORT_OK);
+    sendMessageMock.mockResolvedValueOnce({ ok: false, needsSensitiveConfirm: true }).mockResolvedValueOnce(REPORT_OK);
 
     render(<CaptureView />);
     await screen.findByText("Sign in");
     fireEvent.click(screen.getByRole("button", { name: "Capture page" }));
     fireEvent.click(await screen.findByRole("button", { name: "Add anyway" }));
 
-    expect(sendMessageMock).toHaveBeenCalledTimes(1);
+    expect(sendMessageMock).toHaveBeenCalledTimes(2);
     expect(sendMessageMock).toHaveBeenCalledWith({
       type: "CAPTURE",
       payload: { sourceType: "page", sensitiveConfirmed: true },

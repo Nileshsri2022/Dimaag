@@ -26,11 +26,11 @@ export default function App() {
               </div>
               <span className="mx-1.5 select-none text-[11px] text-[#a8a29e]">·</span>
               {/* Inert until Tasks 15/16 wire the views */}
-              <button type="button" className="py-1 transition-colors hover:text-foreground">
+              <button type="button" disabled className="py-1 text-[#a8a29e] cursor-not-allowed">
                 Chat
               </button>
               <span className="mx-1.5 select-none text-[11px] text-[#a8a29e]">·</span>
-              <button type="button" className="py-1 transition-colors hover:text-foreground">
+              <button type="button" disabled className="py-1 text-[#a8a29e] cursor-not-allowed">
                 Browse
               </button>
             </nav>
