@@ -4,8 +4,11 @@
 // standalone (fn.toString()). Privacy posture (T10 family): extract text
 // only — never inspect page content for decisions; that is guardrail's job,
 // upstream, URL-only.
+//
+// Strategy: try Defuddle first (if injected as global), then fall back to
+// the built-in clutter-removal + selector approach.
 export function pageReader(): { title: string; text: string } | null {
-  // Remove non-content elements from a node (Defuddle-style clutter removal).
+  // Built-in clutter removal (Defuddle-style: removes nav, ads, sidebars, etc.)
   function cleanNode(node: Element): Element {
     const clone = node.cloneNode(true) as Element;
     const junk = clone.querySelectorAll(
@@ -21,7 +24,6 @@ export function pageReader(): { title: string; text: string } | null {
     return clone;
   }
 
-  // Collect text from shadow DOM roots recursively (SPAs, web components).
   function collectShadowText(root: ParentNode): string {
     let text = "";
     try {
@@ -39,7 +41,6 @@ export function pageReader(): { title: string; text: string } | null {
     return text;
   }
 
-  // Selector preference order (first match wins): main -> article -> [role='main'].
   const selector = "main, article, [role='main']";
   let node: Element | null = null;
   for (const part of selector.split(",")) {
@@ -47,7 +48,6 @@ export function pageReader(): { title: string; text: string } | null {
     if (node !== null) break;
   }
 
-  // Fallback: largest text-bearing container (handles pages without semantic landmarks).
   if (node === null) {
     const candidates = document.querySelectorAll("div, section");
     let best: Element | null = null;
@@ -70,13 +70,10 @@ export function pageReader(): { title: string; text: string } | null {
     const cleaned = cleanNode(node);
     raw = (cleaned.textContent || "") + collectShadowText(node);
   } else {
-    // Body fallback: use innerText (rendered text) as before.
     raw = (document.body?.innerText ?? "") + collectShadowText(document);
   }
 
   const text = raw.replace(/\s+/g, " ").trim();
-  // 120 is inlined, not a module const: executeScript serializes the function
-  // body alone, so every reference inside must resolve to document/window.
   if (text.length < 120) return null;
   return { title: document.title.trim(), text };
 }
