@@ -1,6 +1,8 @@
 import { extractDocument } from "../lib/extraction";
+import { errorMessage } from "../lib/errorMessage";
 import { chat, getSettings } from "../lib/llmClient";
 import { createLocalStore } from "../lib/localStore";
+import { handleCapture, type CaptureDeps, type CaptureRequest } from "./capture";
 import { handleRequest, type Req } from "./router";
 
 chrome.sidePanel
@@ -15,13 +17,23 @@ const deps = {
   extract: extractDocument,
 };
 
+// Capture deps: the service worker owns tabs.query and executeScript; the
+// side panel only ever asks the background to capture (Task 14 contract).
+const captureDeps: CaptureDeps = {
+  ...deps,
+  queryTabs: (query) => chrome.tabs.query(query),
+  executeScript: (injection) => chrome.scripting.executeScript(injection),
+};
+
 // sendResponse is used asynchronously, so the listener must return true to
 // keep the message channel open.
-chrome.runtime.onMessage.addListener((req: Req, _sender, sendResponse) => {
-  handleRequest(req, deps)
-    .then(sendResponse)
-    .catch((err) =>
-      sendResponse({ ok: false, error: err instanceof Error ? err.message : String(err) }),
-    );
-  return true;
+chrome.runtime.onMessage.addListener((req: Req | { type: "CAPTURE"; payload: CaptureRequest }, _sender, sendResponse) => {
+    const pending =
+      req.type === "CAPTURE"
+        ? handleCapture(req, captureDeps)
+        : handleRequest(req, deps);
+    pending
+      .then(sendResponse)
+      .catch((err) => sendResponse({ ok: false, error: errorMessage(err) }));
+    return true;
 });

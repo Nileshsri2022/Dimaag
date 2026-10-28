@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Download, UploadCloud } from "lucide-react";
 import { graphExportToBlobUrl, parseGraphExport } from "../lib/exportImport";
+import { errorMessage } from "../lib/errorMessage";
 import { createLocalStore } from "../lib/localStore";
 import type { GraphExport, GraphStore } from "../lib/types";
 import {
@@ -17,10 +18,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 type Stats = { documents: number; chunks: number; entities: number; edges: number };
-
-function errorMessage(err: unknown): string {
-  return err instanceof Error ? err.message : String(err);
-}
 
 /**
  * "Data Management" section (Part 3 of the approved Options design).

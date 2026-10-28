@@ -20,6 +20,7 @@
 import { chunkText } from "../lib/chunker";
 import { EXTRACTION_CHUNK_TOKENS, validateExtraction } from "../lib/extraction";
 import { isSensitive } from "../lib/guardrail";
+import { errorMessage } from "../lib/errorMessage";
 import type { LlmSettings } from "../lib/llmClient";
 import { qaMessages, wrapUntrustedPageText, type ChatMessage } from "../lib/prompts";
 import type { GraphStore, IngestInput, SourceType } from "../lib/types";
@@ -75,10 +76,6 @@ export type StatsResult = {
   ok: true;
   stats: { documents: number; chunks: number; entities: number; edges: number };
 };
-
-function errorMessage(err: unknown): string {
-  return err instanceof Error ? err.message : String(err);
-}
 
 async function ingest(payload: IngestPayload, deps: RouterDeps): Promise<IngestResult> {
   // Guardrail first: the UI shows the warning and resends with confirmation.
