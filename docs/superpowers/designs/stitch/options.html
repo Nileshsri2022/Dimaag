@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings — Dimaag</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed-variant": "#3e34a7",
+            "surface-container-highest": "#e3e2df",
+            "inverse-primary": "#c5c0ff",
+            "surface-container": "#efeeea",
+            "on-secondary-container": "#6a635e",
+            "tertiary": "#64321a",
+            "on-primary-container": "#ccc7ff",
+            "on-tertiary": "#ffffff",
+            "primary-container": "#4f46b8",
+            "primary": "#372ba0",
+            "secondary": "#645d58",
+            "background": "#faf9f5",
+            "surface": "#faf9f5",
+            "outline-variant": "#c8c4d5",
+            "on-primary-fixed": "#130068",
+            "surface-dim": "#dbdad6",
+            "tertiary-fixed": "#ffdbcc",
+            "surface-container-low": "#f4f4f0",
+            "on-surface-variant": "#474553",
+            "surface-variant": "#e3e2df",
+            "on-secondary-fixed-variant": "#4b4641",
+            "inverse-on-surface": "#f2f1ed",
+            "on-tertiary-container": "#ffbfa3",
+            "primary-fixed": "#e3dfff",
+            "on-background": "#1b1c1a",
+            "secondary-fixed": "#eae1da",
+            "on-tertiary-fixed": "#351000",
+            "on-error-container": "#93000a",
+            "on-surface": "#1b1c1a",
+            "inverse-surface": "#2f312e",
+            "secondary-container": "#eae1da",
+            "on-primary": "#ffffff",
+            "outline": "#787584",
+            "secondary-fixed-dim": "#cec5bf",
+            "on-secondary-fixed": "#1f1b17",
+            "on-error": "#ffffff",
+            "surface-bright": "#faf9f5",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#ffb695",
+            "on-tertiary-fixed-variant": "#6c3920",
+            "tertiary-container": "#80492f",
+            "error-container": "#ffdad6",
+            "primary-fixed-dim": "#c5c0ff",
+            "surface-container-high": "#e9e8e4",
+            "surface-tint": "#574ec0"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xs": "0.375rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem",
+            "margin": "3rem",
+            "space-sm": "0.625rem",
+            "space-lg": "1.5rem",
+            "margin-mobile": "1.25rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Manrope"],
+            "caption": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "display-lg-mobile": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "headline-lg": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "label-md": ["Manrope"],
+            "headline-lg-mobile": ["Manrope"],
+            "body-md": ["Manrope"]
+          },
+          "fontSize": {
+            "headline-sm": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+            "caption": ["11px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+            "body-sm": ["13px", {"lineHeight": "20.8px", "fontWeight": "400"}],
+            "display-lg-mobile": ["30px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "headline-md": ["22px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "display-lg": ["40px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-lg": ["17px", {"lineHeight": "27.2px", "fontWeight": "400"}],
+            "headline-lg": ["28px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(79, 70, 184, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-on-primary-container selection:text-primary">
+<!-- TopNavBar (Shared Component) -->
+<header class="w-full bg-surface dark:bg-surface border-b border-surface-container-highest dark:border-surface-container-highest">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-[1200px] mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-headline-md text-headline-md tracking-tight text-on-surface dark:text-on-surface font-semibold hover:text-primary transition-colors" href="#">
+          Dimaag
+        </a>
+<nav class="flex items-center gap-6 font-label-md text-label-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant pb-1 hover:text-on-surface transition-colors duration-150" href="#">Graph</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant pb-1 hover:text-on-surface transition-colors duration-150" href="#">Notes</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant pb-1 hover:text-on-surface transition-colors duration-150" href="#">Sources</a>
+<a class="text-primary dark:text-inverse-primary font-medium border-b-2 border-primary dark:border-inverse-primary pb-1" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-secondary hover:text-on-surface transition-colors p-1.5 rounded-[6px] hover:bg-surface-container-low active:scale-[0.99] flex items-center justify-center" title="Sync with local storage" type="button">
+<span class="material-symbols-outlined text-[19px]">sync</span>
+</button>
+<button class="text-secondary hover:text-on-surface transition-colors p-1.5 rounded-[6px] hover:bg-surface-container-low active:scale-[0.99] flex items-center justify-center" title="Help &amp; Shortcuts" type="button">
+<span class="material-symbols-outlined text-[19px]">help</span>
+</button>
+<div class="w-7 h-7 rounded-full bg-surface-container-high border border-surface-container-highest flex items-center justify-center font-caption text-caption text-secondary ml-1 select-none">
+          D
+        </div>
+</div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="flex-1 w-full">
+<div class="max-w-[880px] mx-auto py-10 px-6">
+<!-- PART 1: Page Header -->
+<section class="space-y-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Dimaag</h1>
+<p class="font-body-lg text-body-lg text-secondary">Personal knowledge graph</p>
+<p class="font-body-sm text-body-sm text-on-secondary-container pt-1">Capture pages, extract entities, ask questions. Everything stays in your browser.</p>
+</section>
+<div class="border-t border-surface-container-highest my-8"></div>
+<!-- PART 2: Section "LLM Connection" -->
+<section>
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">LLM Connection</h2>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Connect any OpenAI-compatible endpoint. Your API key is stored locally and sent only to the endpoint you enter.</p>
+</div>
+<!-- White Settings Card -->
+<div class="bg-surface-container-lowest rounded-[10px] border border-surface-container-highest p-6 shadow-[0_4px_20px_-2px_rgba(28,25,23,0.03)] space-y-5">
+<!-- Field: Base URL -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="base-url-input">Base URL</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest font-mono font-body-sm text-body-sm text-on-surface border border-surface-container-highest rounded-[6px] px-3.5 py-2.5 pr-10 focus:border-primary-container transition-colors" id="base-url-input" spellcheck="false" type="text" value="https://api.openai.com/v1"/>
+<span class="absolute right-3 text-emerald-600 flex items-center select-none" title="Valid endpoint structure">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</span>
+</div>
+</div>
+<!-- Field: API Key -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="api-key-input">API Key</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest font-mono font-body-sm text-body-sm text-on-surface border border-surface-container-highest rounded-[6px] px-3.5 py-2.5 pr-10 focus:border-primary-container transition-colors" id="api-key-input" spellcheck="false" type="password" value="sk-proj-7a91B••••••••••••••••••••••••"/>
+<button class="absolute right-2.5 text-secondary hover:text-on-surface p-1 rounded-[4px] transition-colors flex items-center" id="toggle-visibility-btn" title="Toggle key visibility" type="button">
+<span class="material-symbols-outlined text-[18px]" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action Row -->
+<div class="pt-1 flex flex-wrap items-center gap-3">
+<button class="bg-primary-container text-surface-container-lowest px-5 py-2 rounded-[6px] font-label-md text-label-md hover:bg-primary transition-colors active:scale-[0.99]" type="button">
+              Connect
+            </button>
+<button class="border border-surface-container-highest bg-surface-container-lowest text-on-surface px-4 py-2 rounded-[6px] font-label-md text-label-md hover:bg-surface-container-low transition-colors active:scale-[0.99]" type="button">
+              Save connection
+            </button>
+<span class="font-caption text-caption text-secondary">Fetches the model list from the endpoint.</span>
+</div>
+<!-- Hairline Divider -->
+<div class="border-t border-surface-container-highest my-6"></div>
+<!-- Field: Model Selection -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="model-select">Model</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest font-body-sm text-body-sm text-on-surface border border-surface-container-highest rounded-[6px] px-3.5 py-2.5 pr-10 appearance-none focus:border-primary-container cursor-pointer transition-colors" id="model-select">
+<option selected="" value="gpt-4o-mini">gpt-4o-mini</option>
+<option value="llama-3.1-8b">llama-3.1-8b</option>
+<option value="deepseek-chat">deepseek-chat</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-secondary flex items-center">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</span>
+</div>
+<p class="font-caption text-caption text-secondary mt-1.5">Used for extraction and chat.</p>
+</div>
+<!-- Quiet Connection Status Row -->
+<div class="pt-1 flex items-center gap-2 font-body-sm text-body-sm text-secondary">
+<span class="w-2 h-2 rounded-full bg-emerald-600 inline-block"></span>
+<span>Connected</span>
+</div>
+</div>
+</section>
+<div class="border-t border-surface-container-highest my-8"></div>
+<!-- PART 3: Section "Data Management" -->
+<section>
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Data Management</h2>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Your graph lives in local IndexedDB storage.</p>
+</div>
+<!-- 4 Stat Cards in One Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+<div class="bg-surface-container-lowest rounded-[10px] border border-surface-container-highest p-4 transition-colors hover:border-surface-dim">
+<span class="block font-caption text-caption text-secondary uppercase tracking-wider">Documents</span>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">12 pages</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[10px] border border-surface-container-highest p-4 transition-colors hover:border-surface-dim">
+<span class="block font-caption text-caption text-secondary uppercase tracking-wider">Chunks</span>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">148 text passages</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[10px] border border-surface-container-highest p-4 transition-colors hover:border-surface-dim">
+<span class="block font-caption text-caption text-secondary uppercase tracking-wider">Entities</span>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">96 nodes</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[10px] border border-surface-container-highest p-4 transition-colors hover:border-surface-dim">
+<span class="block font-caption text-caption text-secondary uppercase tracking-wider">Edges</span>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">214 relationships</div>
+</div>
+</div>
+<!-- Action Row: Export -->
+<div class="mb-6 flex flex-wrap items-center gap-3">
+<button class="border border-surface-container-highest bg-surface-container-lowest text-on-surface px-4 py-2 rounded-[6px] font-label-md text-label-md hover:bg-surface-container-low transition-colors flex items-center gap-2 active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[17px]">download</span>
+<span>Export backup (JSON)</span>
+</button>
+<span class="font-caption text-caption text-secondary">Downloads the full graph as a JSON file.</span>
+</div>
+<!-- Import Drop Zone -->
+<div class="border border-dashed border-[#d6cfc4] bg-surface rounded-[10px] p-6 text-center hover:border-primary-container transition-colors cursor-pointer group">
+<div class="flex justify-center mb-2 text-secondary group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">upload_file</span>
+</div>
+<div class="font-label-md text-label-md text-on-surface">Drop a .json backup here or browse</div>
+<div class="mt-2">
+<span class="font-caption text-caption text-amber-800 bg-amber-50/80 border border-amber-200/60 rounded px-2.5 py-1 inline-block">
+              Importing replaces ALL existing data after you confirm.
+            </span>
+</div>
+</div>
+<!-- Danger Zone -->
+<div class="mt-6 bg-rose-50/50 border border-rose-200/80 rounded-[10px] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h3 class="font-label-md text-label-md font-semibold text-rose-900">Danger zone</h3>
+<p class="font-caption text-caption text-rose-700 mt-0.5">Erases the local graph permanently. Export a backup first.</p>
+</div>
+<button class="border border-rose-300 text-rose-700 hover:bg-rose-100/60 px-4 py-2 rounded-[6px] font-label-md text-label-md transition-colors active:scale-[0.99] self-start sm:self-auto shrink-0" type="button">
+            Delete all data
+          </button>
+</div>
+</section>
+<!-- Page Footer Note -->
+<footer class="mt-12 mb-6 text-center font-caption text-caption text-[#a8a29e]">
+        All data stays in your browser. No accounts, no backend.
+      </footer>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full bg-surface dark:bg-surface border-t border-surface-container-highest dark:border-surface-container-highest">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-6 py-4 max-w-[1200px] mx-auto text-center md:text-left gap-2 font-caption text-caption text-secondary dark:text-secondary">
+<div class="text-on-surface dark:text-on-surface">
+        Dimaag Knowledge System · Archival local storage via IndexedDB · All memory remains on this device
+      </div>
+<div class="flex items-center gap-4">
+<a class="text-secondary dark:text-secondary hover:text-on-surface dark:hover:text-on-surface underline transition-colors duration-150" href="#">Documentation</a>
+<a class="text-secondary dark:text-secondary hover:text-on-surface dark:hover:text-on-surface underline transition-colors duration-150" href="#">Local Vault</a>
+<a class="text-secondary dark:text-secondary hover:text-on-surface dark:hover:text-on-surface underline transition-colors duration-150" href="#">Keyboard Shortcuts</a>
+</div>
+</div>
+</footer>
+<script>
+    // Lightweight toggle for password field visibility
+    const apiKeyInput = document.getElementById('api-key-input');
+    const toggleBtn = document.getElementById('toggle-visibility-btn');
+    const eyeIcon = document.getElementById('eye-icon');
+
+    if (toggleBtn && apiKeyInput && eyeIcon) {
+      toggleBtn.addEventListener('click', () => {
+        const isPassword = apiKeyInput.type === 'password';
+        apiKeyInput.type = isPassword ? 'text' : 'password';
+        eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+    }
+  </script>
+</body></html>

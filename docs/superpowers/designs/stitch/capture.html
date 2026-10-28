@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dimaag · Chrome Extension Side Panel</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#ffbfa3",
+            "inverse-on-surface": "#f2f1ed",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f5",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#64321a",
+            "primary-container": "#4f46b8",
+            "inverse-surface": "#2f312e",
+            "outline": "#787584",
+            "on-error-container": "#93000a",
+            "surface-container-highest": "#e3e2df",
+            "on-secondary-container": "#6a635e",
+            "tertiary-fixed": "#ffdbcc",
+            "tertiary-container": "#80492f",
+            "surface": "#faf9f5",
+            "on-tertiary-fixed-variant": "#6c3920",
+            "on-surface-variant": "#474553",
+            "surface-container-low": "#f4f4f0",
+            "surface-container": "#efeeea",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e9e8e4",
+            "on-tertiary-fixed": "#351000",
+            "tertiary-fixed-dim": "#ffb695",
+            "secondary-fixed-dim": "#cec5bf",
+            "outline-variant": "#c8c4d5",
+            "background": "#faf9f5",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1b1c1a",
+            "inverse-primary": "#c5c0ff",
+            "on-secondary-fixed-variant": "#4b4641",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff",
+            "surface-tint": "#574ec0",
+            "secondary-container": "#eae1da",
+            "secondary": "#645d58",
+            "primary-fixed-dim": "#c5c0ff",
+            "on-primary-container": "#ccc7ff",
+            "surface-variant": "#e3e2df",
+            "secondary-fixed": "#eae1da",
+            "on-primary-fixed-variant": "#3e34a7",
+            "surface-dim": "#dbdad6",
+            "primary": "#372ba0",
+            "on-secondary-fixed": "#1f1b17",
+            "on-primary-fixed": "#130068",
+            "on-background": "#1b1c1a",
+            "primary-fixed": "#e3dfff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "margin-mobile": "1.25rem",
+            "space-xs": "0.375rem",
+            "space-sm": "0.625rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "margin": "3rem",
+            "gutter": "1.5rem",
+            "gutter-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "label-md": ["Manrope"],
+            "display-lg-mobile": ["Manrope"],
+            "body-md": ["Manrope"],
+            "headline-lg": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "caption": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "body-lg": ["Manrope"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["24px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "20.8px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "display-lg": ["40px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-lg": ["17px", { "lineHeight": "27.2px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    body {
+      background-color: #faf9f5;
+      color: #1b1c1a;
+      font-family: 'Manrope', sans-serif;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex justify-center selection:bg-[#e3dfff] selection:text-[#372ba0]">
+<!-- Chrome Side Panel Mockup Frame (constrained to ~400px mobile side-panel viewport) -->
+<main class="w-full max-w-[400px] min-h-screen bg-surface flex flex-col border-x border-[#e7e2d8] shadow-sm relative">
+<!-- 1. Quiet Extension Header -->
+<header class="w-full bg-surface border-b border-[#e7e2d8] px-4 pt-3.5 pb-2.5 flex items-center justify-between sticky top-0 z-20 backdrop-blur-sm bg-surface/95">
+<div class="flex items-center gap-3.5">
+<!-- Wordmark -->
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-[#1c1917]">Dimaag</span>
+<!-- Editorial Text Tabs (Capture · Chat · Browse) -->
+<nav aria-label="Extension Navigation" class="flex items-center text-[13px] font-medium leading-none text-[#78716c]">
+<!-- Active "Capture" with clean 2px indicator -->
+<div class="relative py-1">
+<span class="text-primary-container font-semibold transition-colors">Capture</span>
+<div class="absolute -bottom-2.5 left-0 right-0 h-[2px] bg-primary-container rounded-full"></div>
+</div>
+<span class="mx-1.5 text-[#a8a29e] select-none text-[11px]">·</span>
+<button class="py-1 hover:text-[#1c1917] transition-colors focus:outline-none" type="button">Chat</button>
+<span class="mx-1.5 text-[#a8a29e] select-none text-[11px]">·</span>
+<button class="py-1 hover:text-[#1c1917] transition-colors focus:outline-none" type="button">Browse</button>
+</nav>
+</div>
+<!-- Ghost settings gear -->
+<button aria-label="Settings" class="text-[#78716c] hover:text-[#1c1917] p-1.5 rounded-[6px] hover:bg-surface-container-low transition-colors duration-150 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[19px]" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Content Workspace -->
+<div class="px-4 py-4 space-y-4 flex-1 overflow-y-auto">
+<!-- 2. "Current page" Card -->
+<section class="bg-surface-container-lowest rounded-[10px] border border-[#e7e2d8] p-4 space-y-3 shadow-[0_1px_2px_rgba(28,25,23,0.02)]">
+<div>
+<div class="flex items-start justify-between gap-2">
+<h1 class="font-headline-sm text-headline-sm font-medium text-[#1c1917] leading-snug">
+              Introduction to Knowledge Graphs
+            </h1>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[#78716c]">
+<span class="material-symbols-outlined text-[14px] text-[#a8a29e]" data-icon="public">public</span>
+<span class="font-body-sm text-body-sm text-[#78716c] truncate max-w-[290px]">
+              en.wikipedia.org/wiki/Knowledge-graph
+            </span>
+</div>
+</div>
+<p class="font-caption text-caption text-[#a8a29e]">
+          2,340 characters · will extract entities and relationships
+        </p>
+<!-- Text Preview (Reading-well cream inset) -->
+<div class="bg-surface-container-low rounded-[6px] p-3 border border-[#e7e2d8]/60">
+<p class="font-body-sm text-body-sm text-[#44403c] leading-[1.6]">
+            In knowledge representation, a knowledge graph is a knowledge base that uses a graph-structured data model or topology to integrate data. Often associated with semantic Web technologies, knowledge graphs represent entities and their formal relationships in an interconnected network…
+          </p>
+</div>
+</section>
+<!-- 3. Actions Section -->
+<section class="space-y-2.5 pt-0.5">
+<!-- Primary Action -->
+<div>
+<button class="w-full bg-[#4f46b8] hover:bg-[#433ba2] active:scale-[0.99] text-white font-medium font-label-md text-label-md py-2.5 px-4 rounded-[6px] flex items-center justify-center gap-2 shadow-none transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="bookmark">bookmark</span>
+<span>Capture page</span>
+</button>
+<p class="font-label-sm text-label-sm text-[#78716c] text-center mt-1.5">
+            Replaces the previous capture of this URL.
+          </p>
+</div>
+<!-- Hairline Divider -->
+<div class="py-1">
+<div class="w-full h-px bg-[#e7e2d8]"></div>
+</div>
+<!-- Secondary Action -->
+<div>
+<button class="w-full bg-transparent border border-[#e7e2d8] hover:bg-surface-container-low active:scale-[0.99] text-[#1c1917] font-medium font-label-md text-label-md py-2.5 px-4 rounded-[6px] flex items-center justify-center gap-2 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[18px] text-[#78716c]" data-icon="format_quote">format_quote</span>
+<span>Capture selection only</span>
+</button>
+<p class="font-label-sm text-label-sm text-[#78716c] text-center mt-1.5">
+            Saves just your highlighted text.
+          </p>
+</div>
+</section>
+<!-- 4. Quiet Note -->
+<div class="flex items-center gap-2 px-1 pt-1 pb-0.5">
+<svg aria-hidden="true" class="w-3.5 h-3.5 text-[#78716c] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="font-label-sm text-label-sm text-[#78716c] leading-tight">
+          Sensitive pages (banking, email, sign-in) ask for confirmation first.
+        </span>
+</div>
+<!-- 5. Divider Rule -->
+<div class="w-full h-px bg-[#e7e2d8]"></div>
+<!-- 6. "After capture" State Preview / Feedback Illustration -->
+<section class="space-y-2 pt-1 pb-2">
+<div class="px-0.5">
+<span class="font-caption text-caption uppercase tracking-wider font-semibold text-[#a8a29e]">
+            After capture
+          </span>
+</div>
+<div class="bg-surface-container-lowest rounded-[10px] border border-[#e7e2d8] overflow-hidden shadow-[0_1px_2px_rgba(28,25,23,0.02)]">
+<!-- Soft Indigo-tinted header strip -->
+<div class="bg-[#f0eff9] px-3.5 py-2 flex items-center justify-between border-b border-[#e7e2d8]/70">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[17px] text-[#2e7d32]" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span class="font-label-md text-label-md font-medium text-[#1c1917]">Captured</span>
+</div>
+<span class="font-label-sm text-label-sm text-[#78716c]">just now</span>
+</div>
+<!-- Card Body -->
+<div class="p-3.5 space-y-2">
+<div class="font-body-sm text-body-sm font-medium text-[#1c1917] truncate">
+              Introduction to Knowledge Graphs
+            </div>
+<!-- Tabular Stone Meta Line -->
+<p class="font-label-sm text-label-sm text-[#78716c] tracking-tight">
+              1 document · 3 chunks · 8 entities · 5 relationships
+            </p>
+<!-- Ghost Link -->
+<div class="pt-0.5">
+<a class="inline-flex items-center gap-1 font-body-sm text-body-sm font-medium text-primary-container hover:underline group" href="#">
+<span>Open in Browse</span>
+<span class="text-sm transition-transform group-hover:translate-x-0.5">→</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Quiet Footnote Status -->
+<footer class="mt-auto px-4 py-3 border-t border-[#e7e2d8] bg-surface flex items-center justify-between font-caption text-caption text-[#a8a29e]">
+<span>Local storage via IndexedDB</span>
+<span class="font-mono text-[10px]">Vault #01</span>
+</footer>
+</main>
+</body></html>

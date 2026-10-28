@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Dimaag v1 — Stitch design batch (light)</title>
+<style>
+  body { font-family: 'Manrope', 'Segoe UI', sans-serif; background: #faf9f5; color: #1c1917; margin: 0; padding: 32px; }
+  h1 { font-weight: 600; letter-spacing: -0.02em; margin: 0 0 4px; }
+  .sub { color: #78716c; margin: 0 0 32px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1600px; }
+  figure { margin: 0; }
+  h2 { font-size: 16px; font-weight: 500; margin: 0 0 2px; }
+  .note { color: #78716c; font-size: 13px; margin: 0 0 12px; }
+  img { width: 100%; height: auto; border: 1px solid #e7e2d8; border-radius: 10px; display: block; }
+  .mobile { max-width: 420px; }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<h1>Dimaag v1 — UI design batch (light theme)</h1>
+<p class="sub">Athenaeum Quiet Workspace · Stitch project 74642379538573749 · 4 screens</p>
+<div class="grid">
+  <figure>
+    <h2>1 · Options / Settings (desktop tab)</h2>
+    <p class="note">LLM connection (base URL, API key, connect, model dropdown) + data management (stats, export, import, danger zone)</p>
+    <img src="options.png" alt="Options page"/>
+  </figure>
+  <figure class="mobile">
+    <h2>2 · Capture view (side panel)</h2>
+    <p class="note">Current page card, text preview, capture page / capture selection, sensitive-page note, after-capture state</p>
+    <img src="capture.png" alt="Capture view"/>
+  </figure>
+  <figure class="mobile">
+    <h2>3 · Chat view (side panel)</h2>
+    <p class="note">Soft bubbles, assistant answer cards, citation chips, composer with honesty helper line</p>
+    <img src="chat.png" alt="Chat view"/>
+  </figure>
+  <figure class="mobile">
+    <h2>4 · Browse view (side panel)</h2>
+    <p class="note">Search, documents list, entity chips (terracotta = pinned), typed relationship rows with citation chips</p>
+    <img src="browse.png" alt="Browse view"/>
+  </figure>
+</div>
+</body>
+</html>

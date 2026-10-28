@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dimaag — Chat View</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed": "#1f1b17",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#574ec0",
+            "surface-container-high": "#e9e8e4",
+            "secondary-fixed-dim": "#cec5bf",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#e3e2df",
+            "tertiary-fixed-dim": "#ffb695",
+            "inverse-on-surface": "#f2f1ed",
+            "primary-fixed-dim": "#c5c0ff",
+            "primary": "#372ba0",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-bright": "#faf9f5",
+            "on-secondary-container": "#6a635e",
+            "tertiary-container": "#80492f",
+            "on-surface-variant": "#474553",
+            "inverse-primary": "#c5c0ff",
+            "tertiary-fixed": "#ffdbcc",
+            "surface-container-low": "#f4f4f0",
+            "on-secondary-fixed-variant": "#4b4641",
+            "on-error-container": "#93000a",
+            "background": "#faf9f5",
+            "surface-container": "#efeeea",
+            "surface": "#faf9f5",
+            "on-background": "#1b1c1a",
+            "error": "#ba1a1a",
+            "outline": "#787584",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed": "#351000",
+            "tertiary": "#64321a",
+            "primary-fixed": "#e3dfff",
+            "inverse-surface": "#2f312e",
+            "on-primary-fixed": "#130068",
+            "on-tertiary-fixed": "#ffdbcc",
+            "on-tertiary-container": "#ffbfa3",
+            "outline-variant": "#c8c4d5",
+            "on-tertiary-fixed-variant": "#6c3920",
+            "surface-variant": "#e3e2df",
+            "on-tertiary": "#ffffff",
+            "secondary-container": "#eae1da",
+            "secondary-fixed": "#eae1da",
+            "primary-container": "#4f46b8",
+            "on-primary-fixed-variant": "#3e34a7",
+            "surface-dim": "#dbdad6",
+            "on-surface": "#1b1c1a",
+            "on-primary-container": "#ccc7ff",
+            "secondary": "#645d58"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "gutter": "1.5rem",
+            "space-sm": "0.625rem",
+            "space-md": "1rem",
+            "margin-mobile": "1.25rem",
+            "space-lg": "1.5rem",
+            "margin": "3rem",
+            "space-xs": "0.375rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem"
+          },
+          fontFamily: {
+            "label-sm": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "headline-lg-mobile": ["Manrope"],
+            "body-md": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "caption": ["Manrope"],
+            "label-md": ["Manrope"],
+            "headline-lg": ["Manrope"],
+            "display-lg-mobile": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "body-sm": ["Manrope"]
+          },
+          fontSize: {
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-sm": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-lg": ["17px", { "lineHeight": "27.2px", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "caption": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-lg": ["28px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg-mobile": ["30px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-sm": ["13px", { "lineHeight": "20.8px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e3e2df;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cec5bf;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased flex justify-center items-center min-h-screen p-0 sm:p-4 select-none">
+<!-- Side-Panel Container (~400px width Chrome Extension) -->
+<div class="w-full max-w-[400px] h-[884px] sm:h-[680px] bg-surface flex flex-col sm:border sm:border-surface-container-highest sm:rounded-xl overflow-hidden shadow-sm relative">
+<!-- Header Section -->
+<header class="bg-surface border-b border-surface-container-highest px-4 pt-3 pb-2.5 flex flex-col gap-2 shrink-0 z-10">
+<div class="flex items-center justify-between">
+<!-- Brand Wordmark -->
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Dimaag</span>
+<!-- Settings Action -->
+<button aria-label="Settings" class="w-7 h-7 flex items-center justify-center text-secondary hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<!-- Editorial Quiet Tabs: Capture · Chat · Browse -->
+<nav aria-label="Navigation Tabs" class="flex items-center gap-4 text-label-md font-label-md pt-0.5">
+<a class="text-secondary hover:text-on-surface transition-colors pb-1" href="#">Capture</a>
+<span class="text-surface-container-high select-none">·</span>
+<a class="text-primary-container font-medium border-b-2 border-primary-container pb-1" href="#">Chat</a>
+<span class="text-surface-container-high select-none">·</span>
+<a class="text-secondary hover:text-on-surface transition-colors pb-1" href="#">Browse</a>
+</nav>
+</header>
+<!-- Scrollable Conversation Thread -->
+<main class="flex-1 overflow-y-auto px-4 py-4 space-y-5" id="chat-thread">
+<!-- Date / Context Separator (Scholarly, Restrained) -->
+<div class="flex items-center justify-center">
+<span class="font-caption text-caption text-secondary tracking-wider bg-surface-container px-2 py-0.5 rounded-lg border border-surface-container-highest">Today · Active Graph Folio</span>
+</div>
+<!-- Turn 1: User -->
+<div class="flex justify-end">
+<div class="max-w-[85%] bg-primary-fixed text-on-surface rounded-xl rounded-br-[4px] px-3.5 py-2.5 border border-outline-variant/40 shadow-none">
+<p class="font-body-md text-body-md leading-relaxed text-on-surface">What do knowledge graphs use to link entities?</p>
+</div>
+</div>
+<!-- Turn 1: Assistant -->
+<div class="flex flex-col items-start gap-2 max-w-[92%]">
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-3.5 w-full">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+            Graphs link entities through typed, directed relationships. In this graph, each relationship stores the passage that supports it, so every claim traces back to a source.
+          </p>
+<!-- Citation Chips -->
+<div class="flex flex-wrap gap-1.5 mt-3 pt-2.5 border-t border-surface-container-low">
+<button class="inline-flex items-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-primary-container border border-surface-container-highest rounded-lg px-2 py-1 transition-colors" type="button">
+<span class="material-symbols-outlined !text-[13px]" data-icon="menu_book">menu_book</span>
+<span class="font-caption text-caption font-medium">[C1] Intro to Knowledge Graphs — ¶2</span>
+</button>
+<button class="inline-flex items-center gap-1.5 bg-surface-container-low hover:bg-surface-container text-primary-container border border-surface-container-highest rounded-lg px-2 py-1 transition-colors" type="button">
+<span class="material-symbols-outlined !text-[13px]" data-icon="menu_book">menu_book</span>
+<span class="font-caption text-caption font-medium">[C3] Intro to Knowledge Graphs — ¶5</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Turn 2: User -->
+<div class="flex justify-end">
+<div class="max-w-[85%] bg-primary-fixed text-on-surface rounded-xl rounded-br-[4px] px-3.5 py-2.5 border border-outline-variant/40 shadow-none">
+<p class="font-body-md text-body-md leading-relaxed text-on-surface">Which pages mention SPARQL?</p>
+</div>
+</div>
+<!-- Turn 2: Assistant -->
+<div class="flex flex-col items-start gap-2 max-w-[92%]">
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-3.5 w-full space-y-2.5">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+            SPARQL is referenced across 2 captured pages as a semantic query language for extracting graph subgraphs:
+          </p>
+<!-- Source List / Citation Rows -->
+<div class="flex flex-col gap-1.5 pt-1">
+<a class="flex items-center gap-2 bg-surface-container-low hover:bg-surface-container text-primary-container border border-surface-container-highest rounded-lg px-2.5 py-1.5 transition-colors" href="#">
+<span class="material-symbols-outlined !text-[14px]" data-icon="menu_book">menu_book</span>
+<span class="font-caption text-caption font-medium flex-1 truncate">[C4] Knowledge Graphs — ¶4</span>
+<span class="material-symbols-outlined !text-[13px] text-secondary" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="flex items-center gap-2 bg-surface-container-low hover:bg-surface-container text-primary-container border border-surface-container-highest rounded-lg px-2.5 py-1.5 transition-colors" href="#">
+<span class="material-symbols-outlined !text-[14px]" data-icon="menu_book">menu_book</span>
+<span class="font-caption text-caption font-medium flex-1 truncate">[C7] Semantic Web primer — ¶1</span>
+<span class="material-symbols-outlined !text-[13px] text-secondary" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Composer Section -->
+<footer class="bg-surface border-t border-surface-container-highest p-3 flex flex-col gap-2 shrink-0">
+<!-- Input Card Container -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-1.5 flex items-center gap-2 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container/20 transition-all">
+<!-- Lead Quiet Glyph -->
+<div class="pl-2 flex items-center text-secondary">
+<span class="material-symbols-outlined !text-[17px]" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<!-- Text Input -->
+<input class="flex-1 bg-transparent border-0 p-0 text-on-surface placeholder:text-secondary font-body-md text-body-md focus:ring-0 focus:outline-none" placeholder="Ask your graph…" type="text"/>
+<!-- Calm Indigo Send Button -->
+<button aria-label="Send query" class="w-7 h-7 rounded-lg bg-primary-container text-on-primary flex items-center justify-center hover:bg-primary transition-all duration-150 active:scale-[0.97] shrink-0" type="button">
+<span class="material-symbols-outlined !text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</div>
+<!-- Scholarly Helper Note -->
+<p class="font-caption text-caption text-secondary text-center px-2 leading-tight">
+        Answers cite the passages they use — or say what isn't in the graph.
+      </p>
+<!-- Archival Local Vault Footer Stamp -->
+<div class="pt-1 border-t border-surface-container-high/60 flex items-center justify-between text-secondary font-caption text-caption px-1">
+<span>IndexedDB · Local Vault #01</span>
+<span class="flex items-center gap-1 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+          Ready
+        </span>
+</div>
+</footer>
+</div>
+</body></html>

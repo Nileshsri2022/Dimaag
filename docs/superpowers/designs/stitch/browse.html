@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dimaag — Browse Knowledge System</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Typography: Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#ffbfa3",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#eae1da",
+            "surface-dim": "#dbdad6",
+            "on-tertiary": "#ffffff",
+            "on-background": "#1b1c1a",
+            "surface": "#faf9f5",
+            "on-secondary-container": "#6a635e",
+            "primary-fixed-dim": "#c5c0ff",
+            "primary-fixed": "#e3dfff",
+            "surface-container": "#efeeea",
+            "secondary": "#645d58",
+            "tertiary-fixed": "#ffdbcc",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1b1c1a",
+            "inverse-surface": "#2f312e",
+            "surface-tint": "#574ec0",
+            "on-tertiary-fixed": "#351000",
+            "tertiary-container": "#80492f",
+            "inverse-primary": "#c5c0ff",
+            "surface-bright": "#faf9f5",
+            "outline-variant": "#c8c4d5",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#f4f4f0",
+            "primary-container": "#4f46b8",
+            "primary": "#372ba0",
+            "tertiary-fixed-dim": "#ffb695",
+            "on-tertiary-fixed-variant": "#6c3920",
+            "surface-variant": "#e3e2df",
+            "on-primary-container": "#ccc7ff",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed": "#130068",
+            "on-primary-fixed-variant": "#3e34a7",
+            "tertiary": "#64321a",
+            "secondary-container": "#eae1da",
+            "on-secondary-fixed": "#1f1b17",
+            "on-surface-variant": "#474553",
+            "surface-container-high": "#e9e8e4",
+            "inverse-on-surface": "#f2f1ed",
+            "error": "#ba1a1a",
+            "outline": "#787584",
+            "surface-container-highest": "#e3e2df",
+            "error-container": "#ffdad6",
+            "background": "#faf9f5",
+            "secondary-fixed-dim": "#cec5bf",
+            "on-secondary-fixed-variant": "#4b4641"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-mobile": "1.25rem",
+            "space-lg": "1.5rem",
+            "margin": "3rem",
+            "space-xs": "0.375rem",
+            "space-sm": "0.625rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Manrope"],
+            "headline-lg": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "body-md": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "display-lg-mobile": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "label-md": ["Manrope"],
+            "headline-lg-mobile": ["Manrope"],
+            "caption": ["Manrope"],
+            "label-sm": ["Manrope"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", {"lineHeight": "20.8px", "fontWeight": "400"}],
+            "headline-lg": ["28px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "headline-md": ["22px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "display-lg": ["40px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-sm": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+            "display-lg-mobile": ["30px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "body-lg": ["17px", {"lineHeight": "27.2px", "fontWeight": "400"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "caption": ["11px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    /* Subtle custom scrollbar adhering to serene archival paper */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #faf9f5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e7e2d8;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d3ccc0;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex justify-center selection:bg-primary-fixed selection:text-primary">
+<!-- Side Panel Container (~400px Chrome Extension Panel) -->
+<main class="w-full max-w-[400px] min-h-screen bg-surface flex flex-col justify-between border-x border-[#e7e2d8] shadow-[0_0_24px_rgba(28,25,23,0.02)]">
+<!-- Scrollable Workspace Folio -->
+<div class="flex-1 flex flex-col">
+<!-- 1. Quiet Header (Athenaeum Style) -->
+<header class="px-5 pt-4 pb-0 bg-surface border-b border-[#e7e2d8] flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">Dimaag</span>
+<button aria-label="Settings" class="p-1 rounded-[6px] text-secondary hover:text-on-surface hover:bg-[#f5f2eb] transition-colors duration-150 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[19px]" data-icon="settings">settings</span>
+</button>
+</div>
+<!-- Semantic Navigation Tabs -->
+<nav aria-label="Workspace Tabs" class="flex items-center gap-6 font-caption text-caption">
+<a class="pb-2.5 text-secondary hover:text-on-surface transition-colors duration-150" href="#">Capture</a>
+<a class="pb-2.5 text-secondary hover:text-on-surface transition-colors duration-150" href="#">Chat</a>
+<!-- Active Tab: Editorial underline indicator -->
+<a aria-current="page" class="pb-2 text-[#4f46b8] font-medium border-b-2 border-[#4f46b8] transition-colors duration-150" href="#">Browse</a>
+</nav>
+</header>
+<!-- Main Panel Content -->
+<div class="p-4 space-y-5">
+<!-- 2. Search Box -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[#a8a29e] text-[18px] pointer-events-none" data-icon="search">search</span>
+<input class="w-full h-10 pl-9 pr-9 bg-[#ffffff] border border-[#e7e2d8] rounded-[6px] text-on-surface font-body-sm text-body-sm placeholder-[#a8a29e] focus:outline-none focus:border-[#4f46b8] focus:ring-2 focus:ring-[#4f46b8]/15 transition-all shadow-[0_1px_2px_rgba(28,25,23,0.02)]" placeholder="Search entities and pages…" type="search"/>
+<kbd class="absolute right-2.5 px-1.5 py-0.5 font-caption text-caption text-[#a8a29e] bg-[#f5f2eb] border border-[#e7e2d8] rounded-[4px] pointer-events-none">⌘K</kbd>
+</div>
+<!-- 3. Section: DOCUMENTS -->
+<section aria-labelledby="heading-documents" class="space-y-2">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-caption text-caption tracking-wider text-secondary uppercase font-semibold" id="heading-documents">Documents</h2>
+<span class="font-caption text-caption text-[#a8a29e]">3 indexed</span>
+</div>
+<!-- Document List Card -->
+<div class="bg-[#ffffff] border border-[#e7e2d8] rounded-[10px] divide-y divide-[#f0ece1] overflow-hidden shadow-[0_1px_2px_rgba(28,25,23,0.01)]">
+<!-- Row 1 -->
+<article class="p-3 hover:bg-[#faf9f5] transition-colors duration-150 flex items-center justify-between gap-3 cursor-pointer group">
+<div class="min-w-0 flex-1">
+<h3 class="font-label-md text-label-md text-on-surface font-medium truncate group-hover:text-[#4f46b8] transition-colors duration-150">Introduction to Knowledge Graphs</h3>
+<p class="font-label-sm text-label-sm text-[#78716c] truncate mt-0.5">en.wikipedia.org</p>
+</div>
+<span class="shrink-0 font-caption text-caption text-[#78716c] bg-[#f5f2eb] border border-[#e7e2d8] px-2 py-0.5 rounded-[4px]">3 chunks</span>
+</article>
+<!-- Row 2 -->
+<article class="p-3 hover:bg-[#faf9f5] transition-colors duration-150 flex items-center justify-between gap-3 cursor-pointer group">
+<div class="min-w-0 flex-1">
+<h3 class="font-label-md text-label-md text-on-surface font-medium truncate group-hover:text-[#4f46b8] transition-colors duration-150">Semantic Web primer</h3>
+<p class="font-label-sm text-label-sm text-[#78716c] truncate mt-0.5">de.wikipedia.org</p>
+</div>
+<span class="shrink-0 font-caption text-caption text-[#78716c] bg-[#f5f2eb] border border-[#e7e2d8] px-2 py-0.5 rounded-[4px]">2 chunks</span>
+</article>
+<!-- Row 3 -->
+<article class="p-3 hover:bg-[#faf9f5] transition-colors duration-150 flex items-center justify-between gap-3 cursor-pointer group">
+<div class="min-w-0 flex-1">
+<h3 class="font-label-md text-label-md text-on-surface font-medium truncate group-hover:text-[#4f46b8] transition-colors duration-150">Notes on RDF</h3>
+<p class="font-label-sm text-label-sm text-[#78716c] truncate mt-0.5">www.w3.org</p>
+</div>
+<span class="shrink-0 font-caption text-caption text-[#78716c] bg-[#f5f2eb] border border-[#e7e2d8] px-2 py-0.5 rounded-[4px]">1 chunk</span>
+</article>
+</div>
+</section>
+<!-- Divider -->
+<hr class="border-t border-[#e7e2d8] my-1"/>
+<!-- 5. Section: ENTITIES -->
+<section aria-labelledby="heading-entities" class="space-y-2">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-caption text-caption tracking-wider text-secondary uppercase font-semibold" id="heading-entities">Entities</h2>
+<span class="font-caption text-caption text-[#a8a29e]">7 curated</span>
+</div>
+<!-- Entity Chips Cluster -->
+<div class="flex flex-wrap gap-2">
+<!-- Chip 1: Pinned -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-[#9c6044] shrink-0" title="Pinned entity"></span>
+<span>Knowledge graph</span>
+</button>
+<!-- Chip 2: Pinned -->
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-[#9c6044] shrink-0" title="Pinned entity"></span>
+<span>SPARQL</span>
+</button>
+<!-- Chip 3 -->
+<button class="inline-flex items-center px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span>RDF</span>
+</button>
+<!-- Chip 4 -->
+<button class="inline-flex items-center px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span>Ontology</span>
+</button>
+<!-- Chip 5 -->
+<button class="inline-flex items-center px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span>Tim Berners-Lee</span>
+</button>
+<!-- Chip 6 -->
+<button class="inline-flex items-center px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span>Triple store</span>
+</button>
+<!-- Chip 7 -->
+<button class="inline-flex items-center px-2.5 py-1 bg-[#ffffff] hover:bg-[#faf9f5] border border-[#e7e2d8] hover:border-[#d3ccc0] rounded-[6px] text-on-surface font-label-sm text-label-sm transition-colors duration-150" type="button">
+<span>Linked data</span>
+</button>
+</div>
+</section>
+<!-- Divider -->
+<hr class="border-t border-[#e7e2d8] my-1"/>
+<!-- 7. Section: RELATIONSHIPS -->
+<section aria-labelledby="heading-relationships" class="space-y-2">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-caption text-caption tracking-wider text-secondary uppercase font-semibold" id="heading-relationships">Relationships</h2>
+<span class="font-caption text-caption text-[#a8a29e]">Extracted links</span>
+</div>
+<div class="space-y-2.5">
+<!-- Relationship Card 1 -->
+<div class="p-3 bg-[#ffffff] border border-[#e7e2d8] rounded-[10px] space-y-2 shadow-[0_1px_2px_rgba(28,25,23,0.01)] hover:border-[#d3ccc0] transition-colors duration-150">
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm flex-wrap text-on-surface">
+<span class="font-medium text-on-surface">Knowledge graph</span>
+<span class="inline-flex items-center gap-1 text-[#4f46b8] text-[12px] font-caption italic">
+<span class="text-[11px] font-medium leading-none">→</span>
+<span class="text-[11px] tracking-wide text-secondary uppercase not-italic">uses</span>
+</span>
+<span class="font-medium text-on-surface">SPARQL</span>
+</div>
+<div>
+<a class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#f1f0fb] border border-[#dcd7f7] text-[#4f46b8] font-caption text-caption hover:bg-[#e8e5f9] transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[13px]" data-icon="menu_book">menu_book</span>
+<span>[C2] Introduction to Knowledge Graphs — ¶3</span>
+</a>
+</div>
+</div>
+<!-- Relationship Card 2 -->
+<div class="p-3 bg-[#ffffff] border border-[#e7e2d8] rounded-[10px] space-y-2 shadow-[0_1px_2px_rgba(28,25,23,0.01)] hover:border-[#d3ccc0] transition-colors duration-150">
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm flex-wrap text-on-surface">
+<span class="font-medium text-on-surface">RDF</span>
+<span class="inline-flex items-center gap-1 text-[#4f46b8] text-[12px] font-caption italic">
+<span class="text-[11px] font-medium leading-none">→</span>
+<span class="text-[11px] tracking-wide text-secondary uppercase not-italic">extends</span>
+</span>
+<span class="font-medium text-on-surface">Semantic Web</span>
+</div>
+<div>
+<a class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#f1f0fb] border border-[#dcd7f7] text-[#4f46b8] font-caption text-caption hover:bg-[#e8e5f9] transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[13px]" data-icon="menu_book">menu_book</span>
+<span>[C4] Semantic Web primer — ¶1</span>
+</a>
+</div>
+</div>
+<!-- Relationship Card 3 -->
+<div class="p-3 bg-[#ffffff] border border-[#e7e2d8] rounded-[10px] space-y-2 shadow-[0_1px_2px_rgba(28,25,23,0.01)] hover:border-[#d3ccc0] transition-colors duration-150">
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm flex-wrap text-on-surface">
+<span class="font-medium text-on-surface">Triple store</span>
+<span class="inline-flex items-center gap-1 text-[#4f46b8] text-[12px] font-caption italic">
+<span class="text-[11px] font-medium leading-none">→</span>
+<span class="text-[11px] tracking-wide text-secondary uppercase not-italic">stores</span>
+</span>
+<span class="font-medium text-on-surface">RDF</span>
+</div>
+<div>
+<a class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#f1f0fb] border border-[#dcd7f7] text-[#4f46b8] font-caption text-caption hover:bg-[#e8e5f9] transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[13px]" data-icon="menu_book">menu_book</span>
+<span>[C6] Notes on RDF — ¶1</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- 8. Quiet Distraction-Free Status Footer -->
+<footer class="mt-auto px-4 py-3 bg-surface border-t border-[#e7e2d8] text-center">
+<p class="font-caption text-caption text-[#8c827a] tracking-normal">
+        12 documents · 148 chunks · 96 entities · 214 edges
+      </p>
+</footer>
+</main>
+</body></html>
