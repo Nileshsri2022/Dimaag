@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Settings } from "lucide-react";
 import CaptureView from "./CaptureView";
+import ChatView from "./ChatView";
 
 /**
  * Side panel (Task 14 scope): the approved Capture design's quiet header
@@ -8,6 +10,7 @@ import CaptureView from "./CaptureView";
  * tab buttons are rendered inert until their views exist.
  */
 export default function App() {
+  const [tab, setTab] = useState<"capture" | "chat" | "browse">("capture");
   return (
     <main className="flex min-h-screen flex-col bg-background font-sans text-foreground antialiased">
       {/* Quiet extension header */}
@@ -19,15 +22,22 @@ export default function App() {
               aria-label="Extension Navigation"
               className="flex items-center text-[13px] font-medium leading-none text-[#645d58]"
             >
-              {/* Active "Capture" with the design's 2px indicator */}
-              <div className="relative py-1">
-                <span className="font-semibold text-primary">Capture</span>
-                <div className="absolute -bottom-2.5 left-0 right-0 h-[2px] rounded-full bg-primary" />
-              </div>
+              <button
+                type="button"
+                onClick={() => setTab("capture")}
+                className={`relative py-1 ${tab === "capture" ? "font-semibold text-primary" : ""}`}
+              >
+                Capture
+                {tab === "capture" && <div className="absolute -bottom-2.5 left-0 right-0 h-[2px] rounded-full bg-primary" />}
+              </button>
               <span className="mx-1.5 select-none text-[11px] text-[#a8a29e]">·</span>
-              {/* Inert until Tasks 15/16 wire the views */}
-              <button type="button" disabled className="py-1 text-[#a8a29e] cursor-not-allowed">
+              <button
+                type="button"
+                onClick={() => setTab("chat")}
+                className={`relative py-1 ${tab === "chat" ? "font-semibold text-primary" : "text-[#645d58]"}`}
+              >
                 Chat
+                {tab === "chat" && <div className="absolute -bottom-2.5 left-0 right-0 h-[2px] rounded-full bg-primary" />}
               </button>
               <span className="mx-1.5 select-none text-[11px] text-[#a8a29e]">·</span>
               <button type="button" disabled className="py-1 text-[#a8a29e] cursor-not-allowed">
@@ -48,7 +58,8 @@ export default function App() {
 
       {/* Content workspace */}
       <div className="flex-1 overflow-y-auto">
-        <CaptureView />
+        {tab === "capture" && <CaptureView />}
+        {tab === "chat" && <ChatView />}
       </div>
 
       {/* Quiet footnote */}

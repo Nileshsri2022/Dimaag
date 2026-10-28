@@ -92,7 +92,7 @@ export default function CaptureView() {
           // this first; the router re-checks with the URL it actually saw.
           patchItem(id, { state: "sensitive" });
         } else {
-          patchItem(id, { state: "failed", error: res.error });
+          patchItem(id, { state: "failed", error: (res as { error?: string }).error });
         }
       } catch (err) {
         patchItem(id, { state: "failed", error: errorMessage(err) });
